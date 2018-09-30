@@ -13,13 +13,17 @@ public class Stack {
 	}
 
 	// Is already on stack?
-	static boolean already(char val) {
+	static int already(char val) {
+		int result = -1;
+		int ct = 0;
 		if (arr.length > 0)
 			for (char value : arr) {
-				if (val == value)
-					return true;
+				if (val != value)
+					ct++;
+				result = ct;
+				break;
 			}
-		return false;
+		return result;
 	}
 
 	static boolean push(char val) {
@@ -47,18 +51,31 @@ public class Stack {
 		int ans = 0;
 
 		int n = Integer.valueOf(sc.nextLine()).intValue();
-		for (int i = 0; i++ < n;) {
+		for (int i = 0; i < n; i++) {
+		
 			char[] s = sc.nextLine().toCharArray();
+		
+			if (i == 0) continue;
+			
 			ctr = -1;
 			arr = new char[2000];
 			System.out.println("[" + getstring(s) + "]n=" + s.length);
 			for (int j = 0; j < s.length; j++) {
-				if (already(s[j]))
-				boolean ok = push(s[j]);
+				int index;
+				if ((index = already(s[j])) >= 0) {
+					for (int k = index - 1; k > index; k--) {
+						char poppedChar = pop();
+						System.out.println(poppedChar);
+					}
+				} else {
+					boolean pushok = false;
+					pushok = push(s[j]);
+				}
 				char result = pop();
 				System.out.println(result);
 			}
-			if (i == 1) break;
+			if (i == 1)
+				break;
 
 		}
 		sc.close();
