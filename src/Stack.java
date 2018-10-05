@@ -6,7 +6,8 @@ public class Stack {
 
 	static char arr[];
 	static int ctr;
-	static final char charNull = '\u0000';
+	static final char CHAR_NULL = '\u0000';
+	static final boolean DEBUG = true;
 
 	boolean isEmpty() {
 		return (ctr < 0);
@@ -16,10 +17,14 @@ public class Stack {
 	static int already(char val) {
 		int result = -1;
 		int ct = 0;
-		if (arr.length > 0)
+		if (arr != null && arr.length > 0)
 			for (char value : arr) {
-				if (val != value)
+				if (value == CHAR_NULL)
+					break;
+				else if (val != value) {
 					ct++;
+					continue;
+				}
 				result = ct;
 				break;
 			}
@@ -27,12 +32,14 @@ public class Stack {
 	}
 
 	static boolean push(char val) {
+		//if (DEBUG)
+			System.out.println(showstack() + " | push " + val);
 		if (ctr >= (2000 - 1)) {
 			System.err.println("invalid: too many in stack");
 			return false;
 		}
 		arr[++ctr] = val;
-		System.out.println(val + " push ok");
+//		System.out.println(val + " push ok");
 		return true;
 
 	}
@@ -40,10 +47,27 @@ public class Stack {
 	static char pop() {
 		if (ctr < 0) {
 			System.err.println("invalid: stack less than 0");
-			return charNull;
+			return CHAR_NULL;
 		}
 		char val = arr[ctr--];
+		//if (DEBUG)
+			System.out.println(showstack() + " | pop - popped  " + val);
 		return val;
+	}
+	
+	private static String showstack() { 
+		if (true) return "";
+		if (arr == null || arr.length == 0) return "";
+		String result = "";
+		for (int i = 0; i < arr.length; i++) {
+			result += arr[i];
+		}
+		return result;
+	}
+
+	static void print() {
+		//if (DEBUG)
+			System.out.println(showstack() + " | print " + arr[arr.length - 1]);
 	}
 
 	public static void main(String[] args) {
@@ -55,7 +79,7 @@ public class Stack {
 		
 			char[] s = sc.nextLine().toCharArray();
 		
-			if (i == 0) continue;
+			//if (i == 0) continue;
 			
 			ctr = -1;
 			arr = new char[2000];
@@ -63,24 +87,24 @@ public class Stack {
 			for (int j = 0; j < s.length; j++) {
 				int index;
 				if ((index = already(s[j])) >= 0) {
-					for (int k = index - 1; k > index; k--) {
+					for (int k = (index - 1); k >= index; k--) {
 						char poppedChar = pop();
-						System.out.println(poppedChar);
+	//					System.out.println(poppedChar);
 					}
 				} else {
 					boolean pushok = false;
 					pushok = push(s[j]);
 				}
-				char result = pop();
-				System.out.println(result);
+//				char result = pop();
+//				System.out.println(result);
+				print();
 			}
-			if (i == 1)
-				break;
+		//	if (i == 1)				break;
 
 		}
 		sc.close();
 
-		System.out.println(ans);
+//		System.out.println(ans);
 
 	}
 
