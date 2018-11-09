@@ -102,7 +102,7 @@ public class Palin {
 			String sub = "";
 			try {
 				sub = string.substring(i, i + len);
-				if (isPalin(sub) && !result.contains(sub)) {
+				if (isPalin2(sub) && !result.contains(sub)) {
 					result.add(sub);
 				}
 			} catch (RuntimeException e) {
